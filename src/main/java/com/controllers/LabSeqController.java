@@ -2,24 +2,26 @@ package com.controllers;
 
 import com.services.LabSeqService;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/hello")
+import java.math.BigInteger;
+
+@Path("/labseq")
 public class LabSeqController {
 
     @Inject
     LabSeqService serv;
 
-    public LabSeqController(LabSeqService serviceInstance){
-        serv = serviceInstance;
-    }
-
+    @Path("{n:\\d+}")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello from Quarkus REST";
+    public BigInteger calculate(int n) {
+        try{
+            return serv.calculateLabSeq(n);
+        }catch (Exception e){
+            throw new WebApplicationException(e.getMessage(), 400);
+        }
+
     }
 }
