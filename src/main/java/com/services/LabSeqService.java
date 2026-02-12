@@ -1,7 +1,6 @@
 package com.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.ProcessingException;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -15,32 +14,24 @@ public class LabSeqService {
 
     public LabSeqService() {
         //Initialize cache with known values as soon as service is instantiated.
-        cache.put(0,new BigInteger("0"));
-        cache.put(1,new BigInteger("1"));
-        cache.put(2,new BigInteger("0"));
-        cache.put(3,new BigInteger("1"));
+        cache.put(0,BigInteger.ZERO);
+        cache.put(1,BigInteger.ONE);
+        cache.put(2,BigInteger.ZERO);
+        cache.put(3,BigInteger.ONE);
     }
 
     public BigInteger calculateLabSeq(int n) {
         if(n < 0) throw new IllegalArgumentException("The n parameter must be a positive integer.");
-        if (n == 0 || n == 2) return new BigInteger("0");
-        if (n == 1 || n == 3) return new BigInteger("1");
+        if (n == 0 || n == 2) return BigInteger.ZERO;
+        if (n == 1 || n == 3) return BigInteger.ONE;
+
+        BigInteger result = BigInteger.ZERO;
 
         for(int i = 4; i <= n; i++){
-            BigInteger result = cache.get(i-4).add(cache.get(i-3));
+            result = cache.get(i-4).add(cache.get(i-3));
             if(!cache.containsKey(i)) cache.put(i, result);
-            if(i == n) return result;
         }
-
-        throw new ProcessingException("It was not possible to calculate the LabSeq sequence of: "+ n);
-//        if(cache.containsKey(n)){
-//            return cache.get(n);
-//        }
-//
-//        BigInteger resultToReturn = calculateLabSeq(n-4).add(calculateLabSeq(n-3));
-//        cache.put(n, resultToReturn);
-//        return resultToReturn;
-
+        return result;
     }
 
 }

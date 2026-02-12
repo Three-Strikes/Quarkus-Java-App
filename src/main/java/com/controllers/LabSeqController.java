@@ -21,9 +21,6 @@ public class LabSeqController {
             return serv.calculateLabSeq(n);
         }catch (IllegalArgumentException e){
             throw new WebApplicationException(e.getMessage(), 400);
-        }catch (ProcessingException e){
-            throw new WebApplicationException(e.getMessage(), 500);
         }
-
     }
 }

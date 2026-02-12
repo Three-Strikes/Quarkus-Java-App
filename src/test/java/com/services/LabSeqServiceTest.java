@@ -18,16 +18,16 @@ public class LabSeqServiceTest {
     @Test
     void calculateLabSeq_FirstTenNumbers_ShouldPass(){
         HashMap<Integer, BigInteger> expectedRes = new HashMap<>();
-        expectedRes.put(0,new BigInteger("0"));
-        expectedRes.put(1,new BigInteger("1"));
-        expectedRes.put(2,new BigInteger("0"));
-        expectedRes.put(3,new BigInteger("1"));
-        expectedRes.put(4,new BigInteger("1"));
-        expectedRes.put(5,new BigInteger("1"));
-        expectedRes.put(6,new BigInteger("1"));
-        expectedRes.put(7,new BigInteger("2"));
-        expectedRes.put(8,new BigInteger("2"));
-        expectedRes.put(9,new BigInteger("2"));
+        expectedRes.put(0,BigInteger.ZERO);
+        expectedRes.put(1,BigInteger.ONE);
+        expectedRes.put(2,BigInteger.ZERO);
+        expectedRes.put(3,BigInteger.ONE);
+        expectedRes.put(4,BigInteger.ONE);
+        expectedRes.put(5,BigInteger.ONE);
+        expectedRes.put(6,BigInteger.ONE);
+        expectedRes.put(7,BigInteger.TWO);
+        expectedRes.put(8,BigInteger.TWO);
+        expectedRes.put(9,BigInteger.TWO);
 
 
         for (int i = 0; i < 10; i++) {
