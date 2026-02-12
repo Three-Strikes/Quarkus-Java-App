@@ -9,12 +9,22 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 class LabSeqControllerTest {
     @Test
-    void testHelloEndpoint() {
+    void testSuccessLabSeqEndpoint() {
         given()
-                .when().get("/hello")
+                .when().get("/labseq/90")
                 .then()
                 .statusCode(200)
-                .body(is("Hello from Quarkus REST"));
+                .body(is("24815508"));
     }
+
+    @Test
+    void testFailureLabSeqEndpoint() {
+        given()
+                .when().get("/labseq/-90")
+                .then()
+                .statusCode(400)
+                .body(is("The n parameter must be a positive integer."));
+    }
+
 
 }
