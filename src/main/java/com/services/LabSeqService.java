@@ -1,6 +1,7 @@
 package com.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.ProcessingException;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -20,18 +21,25 @@ public class LabSeqService {
         cache.put(3,new BigInteger("1"));
     }
 
-    public BigInteger calculateLabSeq(int n){
-        if(n < 0) throw new IllegalArgumentException("The n parameter has to be a positive integer.");
+    public BigInteger calculateLabSeq(int n) {
+        if(n < 0) throw new IllegalArgumentException("The n parameter must be a positive integer.");
         if (n == 0 || n == 2) return new BigInteger("0");
         if (n == 1 || n == 3) return new BigInteger("1");
 
-        if(cache.containsKey(n)){
-            return cache.get(n);
+        for(int i = 4; i <= n; i++){
+            BigInteger result = cache.get(i-4).add(cache.get(i-3));
+            if(!cache.containsKey(i)) cache.put(i, result);
+            if(i == n) return result;
         }
 
-        BigInteger resultToReturn = calculateLabSeq(n-4).add(calculateLabSeq(n-3));
-        cache.put(n, resultToReturn);
-        return resultToReturn;
+        throw new ProcessingException("It was not possible to calculate the LabSeq sequence of: "+ n);
+//        if(cache.containsKey(n)){
+//            return cache.get(n);
+//        }
+//
+//        BigInteger resultToReturn = calculateLabSeq(n-4).add(calculateLabSeq(n-3));
+//        cache.put(n, resultToReturn);
+//        return resultToReturn;
 
     }
 

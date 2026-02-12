@@ -19,8 +19,10 @@ public class LabSeqController {
     public BigInteger calculate(int n) {
         try{
             return serv.calculateLabSeq(n);
-        }catch (Exception e){
+        }catch (IllegalArgumentException e){
             throw new WebApplicationException(e.getMessage(), 400);
+        }catch (ProcessingException e){
+            throw new WebApplicationException(e.getMessage(), 500);
         }
 
     }
